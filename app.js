@@ -803,9 +803,47 @@ addEventListener('keydown', e => {
   }
 });
 
+/* ---------------- developer credit ---------------- */
+function mountDevPhoto() {
+  $$('.dev-photo').forEach(box => {
+    if (box.dataset.mounted) return;
+    box.dataset.mounted = '1';
+    const img = new Image();
+    img.alt = 'Debanjan Ghosh — developer of Cyber Sentinels';
+    img.decoding = 'async';
+    img.onload = () => { box.classList.add('has-img'); box.prepend(img); };
+    img.onerror = () => box.classList.add('no-img');
+    img.src = box.dataset.photo || 'assets/debanjan-ghosh.jpg';
+  });
+}
+
+/* ---------------- restart everything ---------------- */
+function restartAll() {
+  stopTimer(true);
+  hideSheet();
+  ses = null;
+  save = { ...DEFAULTS, sound: save.sound };
+  persist();
+  // put the home screen back into its first-run state
+  $('#xpWrap').hidden = true;
+  $('#returnNote').hidden = true;
+  $('#codename').value = '';
+  $('#startBtn').innerHTML = 'Start training <span aria-hidden="true">→</span>';
+  renderProfile(); renderMissions(); renderBadges();
+  showScreen('s-home');
+  window.scrollTo(0, 0);
+  sfx.click();
+}
+
+function confirmRestart() {
+  const ok = confirm('Restart everything?\n\nThis clears your codename, XP, badges and best scores on this device, and takes you back to the home screen.');
+  if (ok) restartAll();
+}
+
 /* ---------------- boot ---------------- */
 function boot() {
   renderRules();
+  mountDevPhoto();
   renderProfile();
   $('#soundBtn').classList.toggle('off', !save.sound);
   $('#soundBtn').textContent = save.sound ? '🔊' : '🔇';
@@ -841,17 +879,8 @@ function boot() {
     stopTimer(true); hideSheet(); ses = null; goHub();
   });
 
-  $('#resetBtn').addEventListener('click', () => {
-    if (!confirm('Reset all XP, badges and best scores on this device?')) return;
-    save = { ...DEFAULTS, sound: save.sound };
-    persist();
-    $('#xpWrap').hidden = true;
-    $('#returnNote').hidden = true;
-    $('#codename').value = '';
-    $('#startBtn').innerHTML = 'Start training <span aria-hidden="true">→</span>';
-    renderProfile(); renderMissions(); renderBadges();
-    showScreen('s-home');
-  });
+  $('#resetBtn').addEventListener('click', confirmRestart);
+  $('#restartBtn').addEventListener('click', confirmRestart);
 }
 
 boot();
