@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cyber Sentinels — Academy of Cyber Defense</title>
+<meta name="description" content="A fast, hands-on cybersecurity awareness game for students: hunt phishing emails, forge strong passwords, survive social engineering and stop a live breach.">
+<meta name="theme-color" content="#05070f">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='88'>🛡️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="bg" aria-hidden="true">
+  <div class="grid"></div>
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+  <div class="scan"></div>
+</div>
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 2.6 4.8 5.4v6.1c0 4.6 3 8.2 7.2 9.9 4.2-1.7 7.2-5.3 7.2-9.9V5.4L12 2.6Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+        <path d="M12 8.2v4.6M12 15.6v.1" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+      </svg>
+    </span>
+    <span class="brand-text">
+      <b>Cyber Sentinels</b>
+      <i>Academy of Cyber Defense</i>
+    </span>
+  </div>
+  <div class="player">
+    <div class="xpwrap" id="xpWrap" hidden>
+      <div class="lvl" id="topLevel">LVL 1 · RECRUIT</div>
+      <div class="xpbar"><i id="topBar"></i></div>
+    </div>
+    <button class="icon-btn" id="soundBtn" aria-label="Toggle sound" title="Toggle sound">🔊</button>
+  </div>
+</header>
+
+<main id="main">
+  <!-- ============ HOME ============ -->
+  <section class="screen active" id="s-home">
+    <div class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow"><span class="pulse"></span> Live threat simulation · free for students</span>
+        <h1>Think like a defender.<br><span class="grad">Beat the hackers.</span></h1>
+        <p class="lede">
+          Five missions. Real attacks. Learn to spot a phishing trap in seconds, build a password
+          that can't be cracked, out-talk a scammer — then stop a live breach before the bell rings.
+        </p>
+        <form id="nameForm" class="startbox" autocomplete="off">
+          <label class="sr-only" for="codename">Your codename</label>
+          <input id="codename" maxlength="16" placeholder="Enter your codename" spellcheck="false" autocomplete="off">
+          <button class="btn primary" type="submit" id="startBtn">Start training <span aria-hidden="true">→</span></button>
+        </form>
+        <p class="micro" id="returnNote" hidden></p>
+        <div class="chips">
+          <span class="chip">🎣 Phishing</span>
+          <span class="chip">🔐 Passwords</span>
+          <span class="chip">🧠 Rapid fire</span>
+          <span class="chip">🎭 Social engineering</span>
+          <span class="chip">👾 Boss fight</span>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="radar">
+          <div class="sweep"></div>
+          <div class="ring r1"></div>
+          <div class="ring r2"></div>
+          <div class="ring r3"></div>
+          <span class="dot d1"></span>
+          <span class="dot d2"></span>
+          <span class="dot d3"></span>
+          <span class="dot d4"></span>
+          <div class="shield">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M12 2.6 4.8 5.4v6.1c0 4.6 3 8.2 7.2 9.9 4.2-1.7 7.2-5.3 7.2-9.9V5.4L12 2.6Z" stroke="url(#g1)" stroke-width="1.6" stroke-linejoin="round"/>
+              <path d="m8.6 11.8 2.4 2.4 4.6-4.8" stroke="url(#g1)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+              <defs><linearGradient id="g1" x1="4" y1="3" x2="20" y2="21">
+                <stop stop-color="#5ef2ff"/><stop offset="1" stop-color="#a78bfa"/>
+              </linearGradient></defs>
+            </svg>
+          </div>
+        </div>
+        <div class="floating f1">🎣 New phishing attempt</div>
+        <div class="floating f2">🔐 2FA enabled</div>
+        <div class="floating f3">⚠️ 14 threats blocked</div>
+      </div>
+    </div>
+
+    <h2 class="section-title">The rules that save you <span class="section-note">learned in under 10 minutes</span></h2>
+    <div class="rules-grid" id="homeRules"></div>
+  </section>
+
+  <!-- ============ HUB ============ -->
+  <section class="screen" id="s-hub">
+    <div class="hub-top">
+      <div class="profile">
+        <div class="avatar" id="pAvatar">A</div>
+        <div class="pinfo">
+          <div class="pname" id="pName">Agent</div>
+          <div class="plvl"><span id="pLevel">Recruit</span> <em>·</em> <span id="pXp">0 XP</span> <em>·</em> <span id="pToNext">150 XP to next rank</span></div>
+          <div class="xpbar big"><i id="pBar"></i></div>
+        </div>
+      </div>
+      <div class="statpill"><b id="pBadges">0</b><span>badges</span></div>
+      <div class="statpill"><b id="pDone">0/5</b><span>missions</span></div>
+    </div>
+
+    <h2 class="section-title">Mission control</h2>
+    <div class="mission-grid" id="missionGrid"></div>
+
+    <h2 class="section-title">Badges</h2>
+    <div class="badges" id="badgeGrid"></div>
+
+    <h2 class="section-title">Field manual <span class="section-note">six habits of people who don't get hacked</span></h2>
+    <div class="rules-grid" id="hubRules"></div>
+
+    <div class="hub-foot">
+      <button class="ghost" id="resetBtn" type="button">Reset progress</button>
+      <span class="micro">Your progress is saved on this device only.</span>
+    </div>
+  </section>
+
+  <!-- ============ PLAY ============ -->
+  <section class="screen" id="s-play">
+    <div class="play-top">
+      <button class="ghost small" id="quitBtn" type="button">← Abort</button>
+      <div class="play-meta">
+        <span class="ptitle" id="playTitle">Mission</span>
+        <span class="pkind" id="playKind">—</span>
+      </div>
+      <div class="hud">
+        <div class="hearts" id="hearts" aria-label="Lives"></div>
+        <div class="timer" id="timerRing"><span id="timerNum">20</span></div>
+      </div>
+    </div>
+
+    <div class="bossbar" id="bossbar" hidden>
+      <div class="bossface" id="bossFace">👾</div>
+      <div class="bossmeta">
+        <div class="bossname">NULLBYTE <span>· rogue AI</span></div>
+        <div class="hp"><i id="bossHp"></i></div>
+      </div>
+      <div class="bosshpnum" id="bossHpNum">100</div>
+    </div>
+
+    <div class="progress"><i id="playProgress"></i></div>
+    <div id="stage"></div>
+    <p class="kbdhint">Shortcuts: <kbd>1</kbd>–<kbd>4</kbd> to answer · <kbd>Enter</kbd> to continue</p>
+  </section>
+
+  <!-- ============ RESULT ============ -->
+  <section class="screen" id="s-result">
+    <div id="resultInner"></div>
+  </section>
+</main>
+
+<!-- feedback sheet -->
+<div class="sheet" id="sheet" role="dialog" aria-live="polite" aria-label="Answer feedback">
+  <div class="sheet-inner" id="sheetInner"></div>
+</div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
