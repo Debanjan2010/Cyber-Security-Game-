@@ -40,6 +40,9 @@
       <div class="lvl" id="topLevel">LVL 1 · RECRUIT</div>
       <div class="xpbar"><i id="topBar"></i></div>
     </div>
+    <button class="restart-btn" id="restartBtn" type="button" title="Restart everything and return to the home screen" aria-label="Restart everything">
+      <span class="ri" aria-hidden="true">⟲</span><span class="rlabel">Restart all</span>
+    </button>
     <button class="icon-btn" id="soundBtn" aria-label="Toggle sound" title="Toggle sound">🔊</button>
   </div>
 </header>
@@ -98,6 +101,19 @@
 
     <h2 class="section-title">The rules that save you <span class="section-note">learned in under 10 minutes</span></h2>
     <div class="rules-grid" id="homeRules"></div>
+
+    <section class="dev-card" aria-label="About the developer">
+      <div class="dev-photo" data-photo="assets/debanjan-ghosh.jpg">
+        <span class="dev-initials" aria-hidden="true">DG</span>
+      </div>
+      <div class="dev-copy">
+        <span class="dev-eyebrow">Designed &amp; developed by</span>
+        <h3>Debanjan Ghosh</h3>
+        <p class="dev-meta">Class 11th · Section A</p>
+        <p class="dev-line">Built as a student project so that cyber safety feels like a game — and actually sticks.</p>
+      </div>
+      <span class="dev-badge">🛡️ Student-built</span>
+    </section>
   </section>
 
   <!-- ============ HUB ============ -->
@@ -169,6 +185,13 @@
   <div class="sheet-inner" id="sheetInner"></div>
 </div>
 
+<footer class="sitefoot">
+  <span>🛡️ <b>Cyber Sentinels</b> — a free cybersecurity awareness game for students</span>
+  <span class="dotsep">·</span>
+  <span>Designed &amp; developed by <b>Debanjan Ghosh</b>, Class 11th A</span>
+</footer>
+
 <script type="module" src="app.js"></script>
 </body>
 </html>
+
